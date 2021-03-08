@@ -1,3 +1,4 @@
 <resources>
-  <string name="app_name">Snake-android</string>
+  <string name="app_name">Snake</string>
+  <string name="play">Play</string>
 </resources>
