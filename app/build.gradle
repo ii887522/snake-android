@@ -1,19 +1,26 @@
 plugins {
   id 'com.android.application'
   id 'kotlin-android'
+  id 'kotlin-kapt'
+  id 'androidx.navigation.safeargs'
+  id 'maven-publish'
 }
 
 android {
   compileSdkVersion 30
-  buildToolsVersion "29.0.3"
+  buildToolsVersion '29.0.3'
 
   defaultConfig {
-    applicationId "ii887522.snake"
+    applicationId 'ii887522.snake'
     minSdkVersion 26
     targetSdkVersion 30
     versionCode 1
-    versionName "1.0"
-    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    versionName '1.0'
+    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+  }
+
+  buildFeatures {
+    dataBinding true
   }
 
   buildTypes {
@@ -31,6 +38,23 @@ android {
   kotlinOptions {
     jvmTarget = '1.8'
   }
+
+  signingConfigs {
+    release {
+      storeFile file('<path-to-file>')
+      storePassword '<password>'
+      keyAlias '<alias>'
+      keyPassword '<password>'
+      v1SigningEnabled true
+      v2SigningEnabled true
+    }
+  }
+
+  buildTypes {
+    release {
+      signingConfig signingConfigs.release
+    }
+  }
 }
 
 dependencies {
@@ -38,7 +62,41 @@ dependencies {
   implementation 'androidx.core:core-ktx:1.3.2'
   implementation 'androidx.appcompat:appcompat:1.2.0'
   implementation 'com.google.android.material:material:1.3.0'
+  implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+  implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+  implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+  implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+  implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+  implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+  implementation 'androidx.navigation:navigation-compose:1.0.0-alpha09'
+  implementation 'ii887522:oxy:1.0.0'
+  implementation 'ii887522:controlify:1.0.0'
   testImplementation 'junit:junit:4.13.2'
   androidTestImplementation 'androidx.test.ext:junit:1.1.2'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+afterEvaluate {
+  publishing {
+    publications {
+      release(MavenPublication) {
+        from components.release_apk
+        groupId = 'ii887522'
+        artifactId = 'snake'
+        version = '1.0.0'
+      }
+    }
+    repositories {
+      maven {
+        url 'https://gitlab.com/api/v4/projects/24947706/packages/maven'
+        credentials(HttpHeaderCredentials) {
+          name = 'Private-Token'
+          value = '<access-token>'
+        }
+        authentication {
+          header(HttpHeaderAuthentication)
+        }
+      }
+    }
+  }
 }
