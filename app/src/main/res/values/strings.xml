@@ -1,4 +1,13 @@
 <resources>
   <string name="app_name">Snake</string>
   <string name="play">Play</string>
+  <string name="score">Score: %d</string>
+  <string name="move_up">Move Up</string>
+  <string name="move_right">Move Right</string>
+  <string name="move_down">Move Down</string>
+  <string name="move_left">Move Left</string>
+  <string name="game_over">GAME OVER!</string>
+  <string name="you_win">YOU WIN!</string>
+  <string name="back">Back</string>
+  <string name="play_again">Play again</string>
 </resources>
