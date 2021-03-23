@@ -5,10 +5,8 @@
   android:id="@+id/navigation"
   app:startDestination="@id/mainFragment">
 
-  <fragment android:id="@+id/mainFragment" android:name="ii887522.snake.MainFragment" android:label="MainFragment">
-    <action android:id="@+id/action_mainFragment_to_gameFragment" app:destination="@id/gameFragment" app:popUpTo="@id/mainFragment" app:popUpToInclusive="true" />
+  <fragment android:id="@+id/mainFragment" android:name="ii887522.snake.fragment.MainFragment" android:label="MainFragment">
+    <action android:id="@+id/action_mainFragment_to_gameFragment" app:destination="@id/gameFragment" />
   </fragment>
-  <fragment android:id="@+id/gameFragment" android:name="ii887522.snake.GameFragment" android:label="GameFragment" >
-    <action android:id="@+id/action_gameFragment_to_mainFragment" app:destination="@id/mainFragment" />
-  </fragment>
+  <fragment android:id="@+id/gameFragment" android:name="ii887522.snake.fragment.GameFragment" android:label="GameFragment"/>
 </navigation>
