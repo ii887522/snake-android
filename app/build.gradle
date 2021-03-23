@@ -3,6 +3,7 @@ plugins {
   id 'kotlin-android'
   id 'kotlin-kapt'
   id 'androidx.navigation.safeargs'
+  id 'maven-publish'
 }
 
 android {
@@ -37,6 +38,23 @@ android {
   kotlinOptions {
     jvmTarget = '1.8'
   }
+
+  signingConfigs {
+    release {
+      storeFile file('<path-to-file>')
+      storePassword '<password>'
+      keyAlias '<alias>'
+      keyPassword '<password>'
+      v1SigningEnabled true
+      v2SigningEnabled true
+    }
+  }
+
+  buildTypes {
+    release {
+      signingConfig signingConfigs.release
+    }
+  }
 }
 
 dependencies {
@@ -56,4 +74,29 @@ dependencies {
   testImplementation 'junit:junit:4.13.2'
   androidTestImplementation 'androidx.test.ext:junit:1.1.2'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+afterEvaluate {
+  publishing {
+    publications {
+      release(MavenPublication) {
+        from components.release_apk
+        groupId = 'ii887522'
+        artifactId = 'snake'
+        version = '1.0.0'
+      }
+    }
+    repositories {
+      maven {
+        url 'https://gitlab.com/api/v4/projects/24947706/packages/maven'
+        credentials(HttpHeaderCredentials) {
+          name = 'Private-Token'
+          value = '<access-token>'
+        }
+        authentication {
+          header(HttpHeaderAuthentication)
+        }
+      }
+    }
+  }
 }
