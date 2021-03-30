@@ -60,8 +60,8 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
 
   private val isEatFood get() = when {
     isMoveUp(0) -> map[positions.first().now.toIntPoint()] == CellType.FOOD.ordinal
-    isMoveRight(0) -> map[(positions.first().now + FloatVector(.999f, .0f)).toIntPoint()] == CellType.FOOD.ordinal
-    isMoveDown(0) -> map[(positions.first().now + FloatVector(.0f, .999f)).toIntPoint()] == CellType.FOOD.ordinal
+    isMoveRight(0) -> map[(positions.first().now + FloatVector(.9999f, .0f)).toIntPoint()] == CellType.FOOD.ordinal
+    isMoveDown(0) -> map[(positions.first().now + FloatVector(.0f, .9999f)).toIntPoint()] == CellType.FOOD.ordinal
     isMoveLeft(0) -> map[positions.first().now.toIntPoint()] == CellType.FOOD.ordinal
     else -> false
   }
@@ -100,15 +100,15 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
 
   private val isHitSelf get() = when {
     isMoveUp(0) -> map[positions.first().now.toIntPoint()] == CellType.SNAKE_BODY.ordinal
-    isMoveRight(0) -> map[(positions.first().now + FloatVector(.999f, .0f)).toIntPoint()] == CellType.SNAKE_BODY.ordinal
-    isMoveDown(0) -> map[(positions.first().now + FloatVector(.0f, .999f)).toIntPoint()] == CellType.SNAKE_BODY.ordinal
+    isMoveRight(0) -> map[(positions.first().now + FloatVector(.9999f, .0f)).toIntPoint()] == CellType.SNAKE_BODY.ordinal
+    isMoveDown(0) -> map[(positions.first().now + FloatVector(.0f, .9999f)).toIntPoint()] == CellType.SNAKE_BODY.ordinal
     isMoveLeft(0) -> map[positions.first().now.toIntPoint()] == CellType.SNAKE_BODY.ordinal
     else -> false
   }
 
   private val isHitTopWall get() = isMoveUp(0) && map[positions.first().now.toIntPoint()] == CellType.WALL.ordinal
-  private val isHitRightWall get() = isMoveRight(0) && map[(positions.first().now + FloatVector(.999f, 0f)).toIntPoint()] == CellType.WALL.ordinal
-  private val isHitBottomWall get() = isMoveDown(0) && map[(positions.first().now + FloatVector(0f, .999f)).toIntPoint()] == CellType.WALL.ordinal
+  private val isHitRightWall get() = isMoveRight(0) && map[(positions.first().now + FloatVector(.9999f, 0f)).toIntPoint()] == CellType.WALL.ordinal
+  private val isHitBottomWall get() = isMoveDown(0) && map[(positions.first().now + FloatVector(0f, .9999f)).toIntPoint()] == CellType.WALL.ordinal
   private val isHitLeftWall get() = isMoveLeft(0) && map[(positions.first().now.toIntPoint())] == CellType.WALL.ordinal
 
   private fun reactHit() {
@@ -155,7 +155,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
       Direction.DOWN.ordinal -> speeds.add(IntVector(0, 1))
       Direction.LEFT.ordinal -> speeds.add(IntVector(-1, 0))
     }
-    prevTailSpeed = speeds.first()
+    prevTailSpeed = IntVector(speeds.first().x, speeds.first().y)
   }
 
   private fun reborn() {
@@ -171,7 +171,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
         isMoveLeft(0) -> map[(positions.first().now + FloatVector(1f, 0f)).toIntPoint()] = CellType.BACKGROUND
       }
       if (isDead) return@AnimatedAny
-      prevTailSpeed = speeds.last()
+      prevTailSpeed = IntVector(speeds.last().x, speeds.last().y)
       reactNextInput()
       positions.first().set(positions.first().now + speeds.first().toFloatVector())
     }))
@@ -202,7 +202,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
     val i = positions.size
     when {
       isMoveRight(i - 1) ->
-        positions.add(AnimatedAny(value = (positions.last().now + FloatVector(.0f, .1f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
+        positions.add(AnimatedAny(value = (positions.last().now + FloatVector(.0f, 1f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
           when {
             isMoveUp(i) -> map[(positions[i].now + FloatVector(.0f, 1f)).toIntPoint()] = CellType.BACKGROUND
             isMoveRight(i) -> map[(positions[i].now - FloatVector(1f, .0f)).toIntPoint()] = CellType.BACKGROUND
@@ -336,15 +336,15 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
     else if (isHitSelf || isHitTopWall || isHitRightWall || isHitBottomWall || isHitLeftWall) reactHit()
     when {
       isMoveUp(0) -> map[positions.first().now.toIntPoint()] = CellType.SNAKE_HEAD
-      isMoveRight(0) -> map[(positions.first().now + FloatVector(.999f, 0f)).toIntPoint()] = CellType.SNAKE_HEAD
-      isMoveDown(0) -> map[(positions.first().now + FloatVector(0f, .999f)).toIntPoint()] = CellType.SNAKE_HEAD
+      isMoveRight(0) -> map[(positions.first().now + FloatVector(.9999f, 0f)).toIntPoint()] = CellType.SNAKE_HEAD
+      isMoveDown(0) -> map[(positions.first().now + FloatVector(0f, .9999f)).toIntPoint()] = CellType.SNAKE_HEAD
       isMoveLeft(0) -> map[positions.first().now.toIntPoint()] = CellType.SNAKE_HEAD
     }
     for (i in 1 until positions.size) {
       when {
         isMoveUp(i) -> map[positions[i].now.toIntPoint()] = CellType.SNAKE_BODY
-        isMoveRight(i) -> map[(positions[i].now + FloatVector(.999f, 0f)).toIntPoint()] = CellType.SNAKE_BODY
-        isMoveDown(i) -> map[(positions[i].now + FloatVector(0f, .999f)).toIntPoint()] = CellType.SNAKE_BODY
+        isMoveRight(i) -> map[(positions[i].now + FloatVector(.9999f, 0f)).toIntPoint()] = CellType.SNAKE_BODY
+        isMoveDown(i) -> map[(positions[i].now + FloatVector(0f, .9999f)).toIntPoint()] = CellType.SNAKE_BODY
         isMoveLeft(i) -> map[positions[i].now.toIntPoint()] = CellType.SNAKE_BODY
       }
     }
