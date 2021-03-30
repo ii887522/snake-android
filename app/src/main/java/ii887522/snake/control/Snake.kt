@@ -1,6 +1,7 @@
 package ii887522.snake.control
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -24,7 +25,7 @@ class Snake(lifecycleOwner: LifecycleOwner, wallRect: IntRect, cellSize: Int, ra
   private val wallPosition = wallRect.position
 
   private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-    color = 0xff00ff00.toInt()
+    color = Color.GREEN
   }
 
   init {

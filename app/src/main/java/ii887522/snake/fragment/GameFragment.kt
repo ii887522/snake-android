@@ -16,8 +16,7 @@ import ii887522.snake.databinding.FragmentGameBinding
 class GameFragment : Fragment() {
   @SuppressLint("ClickableViewAccessibility") override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
     val viewModel = ViewModelProvider(this)[GameViewModel::class.java]
-    val binding = DataBindingUtil.inflate<FragmentGameBinding>(inflater,
-      R.layout.fragment_game, container, false)
+    val binding = DataBindingUtil.inflate<FragmentGameBinding>(inflater, R.layout.fragment_game, container, false)
     binding.viewLifecycleOwner = viewLifecycleOwner
     binding.isLosingModalShowing = viewModel.isLosingModalShowing
     binding.isWinningModalShowing = viewModel.isWinningModalShowing
