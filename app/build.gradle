@@ -8,7 +8,6 @@ plugins {
 
 android {
   compileSdkVersion 30
-  buildToolsVersion '29.0.3'
 
   defaultConfig {
     applicationId 'ii887522.snake'
@@ -43,7 +42,7 @@ android {
     release {
       storeFile file('<path-to-file>')
       storePassword '<password>'
-      keyAlias '<alias>'
+      keyAlias 'key'
       keyPassword '<password>'
       v1SigningEnabled true
       v2SigningEnabled true
@@ -59,8 +58,8 @@ android {
 
 dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'androidx.core:core-ktx:1.3.2'
-  implementation 'androidx.appcompat:appcompat:1.2.0'
+  implementation 'androidx.core:core-ktx:1.5.0'
+  implementation 'androidx.appcompat:appcompat:1.3.0'
   implementation 'com.google.android.material:material:1.3.0'
   implementation 'androidx.legacy:legacy-support-v4:1.0.0'
   implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -68,7 +67,7 @@ dependencies {
   implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
   implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
   implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
-  implementation 'androidx.navigation:navigation-compose:1.0.0-alpha09'
+  implementation 'androidx.navigation:navigation-compose:2.4.0-alpha01'
   implementation 'ii887522:oxy:1.0.0'
   implementation 'ii887522:controlify:1.0.0'
   testImplementation 'junit:junit:4.13.2'
@@ -88,13 +87,11 @@ afterEvaluate {
     }
     repositories {
       maven {
-        url 'https://gitlab.com/api/v4/projects/24947706/packages/maven'
-        credentials(HttpHeaderCredentials) {
-          name = 'Private-Token'
-          value = '<access-token>'
-        }
-        authentication {
-          header(HttpHeaderAuthentication)
+        name = 'GithubPackages'
+        url 'https://maven.pkg.github.com/ii887522/snake-android'
+        credentials {
+          username = 'ii887522'
+          password = '<access-token>'
         }
       }
     }

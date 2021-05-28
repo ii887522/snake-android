@@ -26,5 +26,35 @@
       <option name="name" value="maven" />
       <option name="url" value="https://gitlab.com/api/v4/packages/maven" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="GithubPackages" />
+      <option name="name" value="GithubPackages" />
+      <option name="url" value="https://maven.pkg.github.com/ii887522/oxy" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="GithubPackages" />
+      <option name="name" value="GithubPackages" />
+      <option name="url" value="https://maven.pkg.github.com/ii887522" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="GithubPackages" />
+      <option name="name" value="GithubPackages" />
+      <option name="url" value="https://maven.pkg.github.com/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="GithubPackages" />
+      <option name="name" value="GithubPackages" />
+      <option name="url" value="https://maven.pkg.github.com" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="GithubPackages2" />
+      <option name="name" value="GithubPackages2" />
+      <option name="url" value="https://maven.pkg.github.com/ii887522/controlify" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="GithubPackages" />
+      <option name="name" value="GithubPackages" />
+      <option name="url" value="https://maven.pkg.github.com/ii887522/" />
+    </remote-repository>
   </component>
 </project>

@@ -4,11 +4,7 @@ It is a 2D board mobile game which the snake eats the food to grow itself while 
 <img src="docs/game-screen.jpg" alt="Game Screen" width="360" /><br /><br />
 
 ## Table of Contents
-- [For developers reading this in GitHub](https://gitlab.com/ii887522/snake-android#for-developers-reading-this-in-github)
-- [Prerequisites](https://gitlab.com/ii887522/snake-android#prerequisites)
-
-## For developers reading this in GitHub
-Please go to https://gitlab.com/ii887522/snake-android to start contributing instead.
+- [Prerequisites](https://github.com/ii887522/snake-android#prerequisites)
 
 ## Prerequisites
 - [Visual Studio Code](https://code.visualstudio.com/)
