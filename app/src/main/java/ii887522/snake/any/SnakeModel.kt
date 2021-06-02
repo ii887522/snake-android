@@ -15,8 +15,8 @@ import java.util.concurrent.LinkedTransferQueue
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-private const val duration = 62 // animation duration
-private const val epsilon = .0001f
+private const val DURATION = 62 // animation duration
+private const val EPSILON = .0001f
 
 /**
  * **Not Thread Safe**
@@ -62,8 +62,8 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
 
   private val isEatFood get() = when {
     isMoveUp(0) -> map[positions.first().now.toIntPoint()] == CellType.FOOD.ordinal
-    isMoveRight(0) -> map[(positions.first().now + FloatVector(1f - epsilon, .0f)).toIntPoint()] == CellType.FOOD.ordinal
-    isMoveDown(0) -> map[(positions.first().now + FloatVector(.0f, 1f - epsilon)).toIntPoint()] == CellType.FOOD.ordinal
+    isMoveRight(0) -> map[(positions.first().now + FloatVector(1f - EPSILON, .0f)).toIntPoint()] == CellType.FOOD.ordinal
+    isMoveDown(0) -> map[(positions.first().now + FloatVector(.0f, 1f - EPSILON)).toIntPoint()] == CellType.FOOD.ordinal
     isMoveLeft(0) -> map[positions.first().now.toIntPoint()] == CellType.FOOD.ordinal
     else -> false
   }
@@ -102,15 +102,15 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
 
   private val isHitSelf get() = when {
     isMoveUp(0) -> map[positions.first().now.toIntPoint()] == CellType.SNAKE_BODY.ordinal
-    isMoveRight(0) -> map[(positions.first().now + FloatVector(1f - epsilon, .0f)).toIntPoint()] == CellType.SNAKE_BODY.ordinal
-    isMoveDown(0) -> map[(positions.first().now + FloatVector(.0f, 1f - epsilon)).toIntPoint()] == CellType.SNAKE_BODY.ordinal
+    isMoveRight(0) -> map[(positions.first().now + FloatVector(1f - EPSILON, .0f)).toIntPoint()] == CellType.SNAKE_BODY.ordinal
+    isMoveDown(0) -> map[(positions.first().now + FloatVector(.0f, 1f - EPSILON)).toIntPoint()] == CellType.SNAKE_BODY.ordinal
     isMoveLeft(0) -> map[positions.first().now.toIntPoint()] == CellType.SNAKE_BODY.ordinal
     else -> false
   }
 
   private val isHitTopWall get() = isMoveUp(0) && map[positions.first().now.toIntPoint()] == CellType.WALL.ordinal
-  private val isHitRightWall get() = isMoveRight(0) && map[(positions.first().now + FloatVector(1f - epsilon, 0f)).toIntPoint()] == CellType.WALL.ordinal
-  private val isHitBottomWall get() = isMoveDown(0) && map[(positions.first().now + FloatVector(0f, 1f - epsilon)).toIntPoint()] == CellType.WALL.ordinal
+  private val isHitRightWall get() = isMoveRight(0) && map[(positions.first().now + FloatVector(1f - EPSILON, 0f)).toIntPoint()] == CellType.WALL.ordinal
+  private val isHitBottomWall get() = isMoveDown(0) && map[(positions.first().now + FloatVector(0f, 1f - EPSILON)).toIntPoint()] == CellType.WALL.ordinal
   private val isHitLeftWall get() = isMoveLeft(0) && map[(positions.first().now.toIntPoint())] == CellType.WALL.ordinal
 
   private fun reactHit() {
@@ -169,7 +169,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
       AnimatedAny(
         value = IntPoint(wallSize.w / cellSize shr 1 /* which means wallSize.w / cellSize / 2 */, wallSize.h / cellSize shr 1 /* which means wallSize.h / cellSize / 2 */)
           .toFloatPoint(),
-        duration, onAnimationEnd = {
+        DURATION, onAnimationEnd = {
       when {
         isMoveUp(0) -> map[(positions.first().now + FloatVector(0f, 1f)).toIntPoint()] = CellType.BACKGROUND
         isMoveRight(0) -> map[(positions.first().now - FloatVector(1f, 0f)).toIntPoint()] = CellType.BACKGROUND
@@ -208,7 +208,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
     val i = positions.size
     when {
       isMoveRight(i - 1) ->
-        positions.add(AnimatedAny(value = (positions.last().now + FloatVector(.0f, 1f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
+        positions.add(AnimatedAny(value = (positions.last().now + FloatVector(.0f, 1f)).toIntPoint().toFloatPoint(), DURATION, onAnimationEnd = {
           when {
             isMoveUp(i) -> map[(positions[i].now + FloatVector(.0f, 1f)).toIntPoint()] = CellType.BACKGROUND
             isMoveRight(i) -> map[(positions[i].now - FloatVector(1f, .0f)).toIntPoint()] = CellType.BACKGROUND
@@ -218,7 +218,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
           followPrevCell(i)
         }))
       isMoveLeft(i - 1) ->
-        positions.add(AnimatedAny(value = (positions.last().now + FloatVector(1f, 1f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
+        positions.add(AnimatedAny(value = (positions.last().now + FloatVector(1f, 1f)).toIntPoint().toFloatPoint(), DURATION, onAnimationEnd = {
           when {
             isMoveUp(i) -> map[(positions[i].now + FloatVector(.0f, 1f)).toIntPoint()] = CellType.BACKGROUND
             isMoveRight(i) -> map[(positions[i].now - FloatVector(1f, .0f)).toIntPoint()] = CellType.BACKGROUND
@@ -228,7 +228,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
           followPrevCell(i)
         }))
       else ->
-        positions.add(AnimatedAny(value = (positions.last().now + FloatVector(.0f, 2f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
+        positions.add(AnimatedAny(value = (positions.last().now + FloatVector(.0f, 2f)).toIntPoint().toFloatPoint(), DURATION, onAnimationEnd = {
           when {
             isMoveUp(i) -> map[(positions[i].now + FloatVector(.0f, 1f)).toIntPoint()] = CellType.BACKGROUND
             isMoveRight(i) -> map[(positions[i].now - FloatVector(1f, .0f)).toIntPoint()] = CellType.BACKGROUND
@@ -245,7 +245,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
   private fun growWhenTailMoveRightPreviously() {
     val i = positions.size
     when {
-      isMoveUp(i - 1) -> positions.add(AnimatedAny(value = (positions.last().now + FloatVector(-1f, 1f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
+      isMoveUp(i - 1) -> positions.add(AnimatedAny(value = (positions.last().now + FloatVector(-1f, 1f)).toIntPoint().toFloatPoint(), DURATION, onAnimationEnd = {
         when {
           isMoveUp(i) -> map[(positions[i].now + FloatVector(.0f, 1f)).toIntPoint()] = CellType.BACKGROUND
           isMoveRight(i) -> map[(positions[i].now - FloatVector(1f, .0f)).toIntPoint()] = CellType.BACKGROUND
@@ -254,7 +254,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
         }
         followPrevCell(i)
       }))
-      else -> positions.add(AnimatedAny(value = (positions.last().now - FloatVector(1f, 0f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
+      else -> positions.add(AnimatedAny(value = (positions.last().now - FloatVector(1f, 0f)).toIntPoint().toFloatPoint(), DURATION, onAnimationEnd = {
         when {
           isMoveUp(i) -> map[(positions[i].now + FloatVector(.0f, 1f)).toIntPoint()] = CellType.BACKGROUND
           isMoveRight(i) -> map[(positions[i].now - FloatVector(1f, .0f)).toIntPoint()] = CellType.BACKGROUND
@@ -271,7 +271,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
   private fun growWhenTailMoveDownPreviously() {
     val i = positions.size
     when {
-      isMoveLeft(i - 1) -> positions.add(AnimatedAny(value = (positions.last().now + FloatVector(1f, -1f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
+      isMoveLeft(i - 1) -> positions.add(AnimatedAny(value = (positions.last().now + FloatVector(1f, -1f)).toIntPoint().toFloatPoint(), DURATION, onAnimationEnd = {
         when {
           isMoveUp(i) -> map[(positions[i].now + FloatVector(.0f, 1f)).toIntPoint()] = CellType.BACKGROUND
           isMoveRight(i) -> map[(positions[i].now - FloatVector(1f, .0f)).toIntPoint()] = CellType.BACKGROUND
@@ -280,7 +280,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
         }
         followPrevCell(i)
       }))
-      else -> positions.add(AnimatedAny(value = (positions.last().now - FloatVector(0f, 1f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
+      else -> positions.add(AnimatedAny(value = (positions.last().now - FloatVector(0f, 1f)).toIntPoint().toFloatPoint(), DURATION, onAnimationEnd = {
         when {
           isMoveUp(i) -> map[(positions[i].now + FloatVector(.0f, 1f)).toIntPoint()] = CellType.BACKGROUND
           isMoveRight(i) -> map[(positions[i].now - FloatVector(1f, .0f)).toIntPoint()] = CellType.BACKGROUND
@@ -297,7 +297,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
   private fun growWhenTailMoveLeftPreviously() {
     val i = positions.size
     when {
-      isMoveUp(i - 1) -> positions.add(AnimatedAny(value = (positions.last().now + FloatVector(1f, 1f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
+      isMoveUp(i - 1) -> positions.add(AnimatedAny(value = (positions.last().now + FloatVector(1f, 1f)).toIntPoint().toFloatPoint(), DURATION, onAnimationEnd = {
         when {
           isMoveUp(i) -> map[(positions[i].now + FloatVector(.0f, 1f)).toIntPoint()] = CellType.BACKGROUND
           isMoveRight(i) -> map[(positions[i].now - FloatVector(1f, .0f)).toIntPoint()] = CellType.BACKGROUND
@@ -306,7 +306,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
         }
         followPrevCell(i)
       }))
-      isMoveDown(i - 1) -> positions.add(AnimatedAny(value = (positions.last().now + FloatVector(1f, 0f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
+      isMoveDown(i - 1) -> positions.add(AnimatedAny(value = (positions.last().now + FloatVector(1f, 0f)).toIntPoint().toFloatPoint(), DURATION, onAnimationEnd = {
         when {
           isMoveUp(i) -> map[(positions[i].now + FloatVector(.0f, 1f)).toIntPoint()] = CellType.BACKGROUND
           isMoveRight(i) -> map[(positions[i].now - FloatVector(1f, .0f)).toIntPoint()] = CellType.BACKGROUND
@@ -315,7 +315,7 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
         }
         followPrevCell(i)
       }))
-      else -> positions.add(AnimatedAny(value = (positions.last().now + FloatVector(2f, 0f)).toIntPoint().toFloatPoint(), duration, onAnimationEnd = {
+      else -> positions.add(AnimatedAny(value = (positions.last().now + FloatVector(2f, 0f)).toIntPoint().toFloatPoint(), DURATION, onAnimationEnd = {
         when {
           isMoveUp(i) -> map[(positions[i].now + FloatVector(.0f, 1f)).toIntPoint()] = CellType.BACKGROUND
           isMoveRight(i) -> map[(positions[i].now - FloatVector(1f, .0f)).toIntPoint()] = CellType.BACKGROUND
@@ -342,15 +342,15 @@ class SnakeModel(private val wallSize: IntSize, val cellSize: Int, private val r
     else if (isHitSelf || isHitTopWall || isHitRightWall || isHitBottomWall || isHitLeftWall) reactHit()
     when {
       isMoveUp(0) -> map[positions.first().now.toIntPoint()] = CellType.SNAKE_HEAD
-      isMoveRight(0) -> map[(positions.first().now + FloatVector(1f - epsilon, 0f)).toIntPoint()] = CellType.SNAKE_HEAD
-      isMoveDown(0) -> map[(positions.first().now + FloatVector(0f, 1f - epsilon)).toIntPoint()] = CellType.SNAKE_HEAD
+      isMoveRight(0) -> map[(positions.first().now + FloatVector(1f - EPSILON, 0f)).toIntPoint()] = CellType.SNAKE_HEAD
+      isMoveDown(0) -> map[(positions.first().now + FloatVector(0f, 1f - EPSILON)).toIntPoint()] = CellType.SNAKE_HEAD
       isMoveLeft(0) -> map[positions.first().now.toIntPoint()] = CellType.SNAKE_HEAD
     }
     for (i in 1 until positions.size) {
       when {
         isMoveUp(i) -> map[positions[i].now.toIntPoint()] = CellType.SNAKE_BODY
-        isMoveRight(i) -> map[(positions[i].now + FloatVector(1f - epsilon, 0f)).toIntPoint()] = CellType.SNAKE_BODY
-        isMoveDown(i) -> map[(positions[i].now + FloatVector(0f, 1f - epsilon)).toIntPoint()] = CellType.SNAKE_BODY
+        isMoveRight(i) -> map[(positions[i].now + FloatVector(1f - EPSILON, 0f)).toIntPoint()] = CellType.SNAKE_BODY
+        isMoveDown(i) -> map[(positions[i].now + FloatVector(0f, 1f - EPSILON)).toIntPoint()] = CellType.SNAKE_BODY
         isMoveLeft(i) -> map[positions[i].now.toIntPoint()] = CellType.SNAKE_BODY
       }
     }
