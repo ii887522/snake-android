@@ -27,6 +27,9 @@ import ii887522.snake.enums.CellType
 import java.lang.System.nanoTime
 import kotlin.random.Random
 
+private const val CELL_SIZE = 16
+private const val WALL_CELL_COUNT = 2
+
 class World(context: Context, attrs: AttributeSet) : View(context, attrs) {
   lateinit var lifecycleOwner: LifecycleOwner
   private val random = Random(nanoTime())
@@ -59,16 +62,15 @@ class World(context: Context, attrs: AttributeSet) : View(context, attrs) {
         !(left || right)
       }
     }
-    val cellSize = 16
-    val map = Map<CellType>(IntSize(w / cellSize, h / cellSize))
+    val map = Map<CellType>(IntSize(w / CELL_SIZE, h / CELL_SIZE))
     scene = ControlGroup(lifecycleOwner, IntPoint(), arrayOf(
-      BorderView(Border(IntRect(IntPoint(0, 0), IntSize(w, h)), cellSize), Color.RED, map, CellType.WALL),
-      Snake(lifecycleOwner, IntRect(IntPoint(0, 0), IntSize(w, h)), cellSize, random, map, {
+      BorderView(Border(IntRect(IntPoint(0, 0), IntSize(w, h)), CELL_SIZE), Color.RED, map, CellType.WALL),
+      Snake(lifecycleOwner, IntRect(IntPoint(0, 0), IntSize(w, h)), CELL_SIZE, random, map, {
         isLosingModalShowing.value = true
       }, isDead = isModalShowing, hasEatFood = isSnakeEatFood),
-      Food(lifecycleOwner, IntRect(IntPoint(0, 0), IntSize(w, h)), cellSize, random, map, isSnakeEatFood)
+      Food(lifecycleOwner, IntRect(IntPoint(0, 0), IntSize(w, h)), CELL_SIZE, random, map, isSnakeEatFood)
     ))
-    ScoreModel(lifecycleOwner, (((w / cellSize - 2) * (h / cellSize - 2)) * .75f).toInt(), {
+    ScoreModel(lifecycleOwner, (((w / CELL_SIZE - WALL_CELL_COUNT) * (h / CELL_SIZE - WALL_CELL_COUNT)) * .75f).toInt(), {
       isWinningModalShowing.value = true
     }, canIncrement = isSnakeEatFood, canReset = canScoreReset).value.observe(lifecycleOwner) {
       score.text = resources.getString(R.string.score, it)

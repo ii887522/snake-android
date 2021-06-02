@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ii887522.controlify.enums.Input
-import ii887522.snake.model.GameViewModel
+import ii887522.snake.any.GameViewModel
 import ii887522.snake.R
 import ii887522.snake.databinding.FragmentGameBinding
 

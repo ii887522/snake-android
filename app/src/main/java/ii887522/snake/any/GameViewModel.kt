@@ -1,4 +1,4 @@
-package ii887522.snake.model
+package ii887522.snake.any
 
 import android.app.Activity
 import android.content.Context
