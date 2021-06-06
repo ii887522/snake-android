@@ -3,9 +3,6 @@ buildscript {
   ext.kotlin_version = '1.5.10'
   ext.nav_version = '2.3.5'
 
-  ext.username = 'ii887522'
-  ext.password = '<access-token>'
-
   repositories {
     google()
     jcenter()
@@ -29,16 +26,16 @@ allprojects {
       name = 'GithubPackages'
       url 'https://maven.pkg.github.com/ii887522/oxy'
       credentials {
-        username = "$username"
-        password = "$password"
+        username = System.getenv('GITHUB_USERNAME')
+        password = System.getenv('GITHUB_TOKEN')
       }
     }
     maven {
       name = 'GithubPackages'
       url 'https://maven.pkg.github.com/ii887522/controlify'
       credentials {
-        username = "$username"
-        password = "$password"
+        username = System.getenv('GITHUB_USERNAME')
+        password = System.getenv('GITHUB_TOKEN')
       }
     }
   }

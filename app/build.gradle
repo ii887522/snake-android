@@ -40,10 +40,10 @@ android {
 
   signingConfigs {
     release {
-      storeFile file('<path-to-file>')
-      storePassword '<password>'
+      storeFile file('key-store.jks')
+      storePassword System.getenv('GITHUB_TOKEN')
       keyAlias 'key'
-      keyPassword '<password>'
+      keyPassword System.getenv('GITHUB_TOKEN')
       v1SigningEnabled true
       v2SigningEnabled true
     }
@@ -67,7 +67,7 @@ dependencies {
   implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
   implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
   implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
-  implementation 'androidx.navigation:navigation-compose:2.4.0-alpha01'
+  implementation 'androidx.navigation:navigation-compose:2.4.0-alpha02'
   implementation 'ii887522:oxy:1.0.0'
   implementation 'ii887522:controlify:1.0.0'
   testImplementation 'junit:junit:4.13.2'
@@ -80,7 +80,7 @@ afterEvaluate {
     publications {
       release(MavenPublication) {
         from components.release_apk
-        groupId = 'ii887522'
+        groupId = System.getenv('GITHUB_USERNAME')
         artifactId = 'snake'
         version = '1.0.1'
       }
@@ -90,8 +90,8 @@ afterEvaluate {
         name = 'GithubPackages'
         url 'https://maven.pkg.github.com/ii887522/snake-android'
         credentials {
-          username = 'ii887522'
-          password = '<access-token>'
+          username = System.getenv('GITHUB_USERNAME')
+          password = System.getenv('GITHUB_TOKEN')
         }
       }
     }
