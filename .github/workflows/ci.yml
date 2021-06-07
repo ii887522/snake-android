@@ -27,13 +27,20 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-            build
-            app/build
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
             ${{ runner.os }}-
+      - name: Cache outputs
+        id: outputs-cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            build
+            app/build
+          key: ${{ runner.os }}-gradle-${{ hashFiles('app/src/**/*') }}
       - name: Build project
+        if: steps.outputs-cache.outputs.cache-hit != 'true'
         run: |
           chmod 777 ./gradlew
           ./gradlew :app:build
@@ -61,12 +68,17 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-            build
-            app/build
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
             ${{ runner.os }}-
+      - name: Cache outputs
+        uses: actions/cache@v2
+        with:
+          path: |
+            build
+            app/build
+          key: ${{ runner.os }}-gradle-${{ hashFiles('app/src/**/*') }}
       - name: Deploy project
         run: |
           chmod 777 ./gradlew
