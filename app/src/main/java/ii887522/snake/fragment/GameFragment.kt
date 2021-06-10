@@ -23,66 +23,66 @@ class GameFragment : Fragment() {
     binding.pScore = binding.score
     viewModel.isLosingModalShowing.observe(viewLifecycleOwner) {
       if (it) {
-        binding.upButton.isEnabled = false
-        binding.rightButton.isEnabled = false
-        binding.downButton.isEnabled = false
-        binding.leftButton.isEnabled = false
+        binding.gamepad.upButton.isEnabled = false
+        binding.gamepad.rightButton.isEnabled = false
+        binding.gamepad.downButton.isEnabled = false
+        binding.gamepad.leftButton.isEnabled = false
         viewModel.vibrate(requireActivity())
         viewModel.beginFade(container!!)
         binding.sceneCover.visibility = View.VISIBLE
-        binding.gameOver.visibility = View.VISIBLE
+        binding.gameOver.layout.visibility = View.VISIBLE
       } else {
         binding.sceneCover.visibility = View.INVISIBLE
-        binding.gameOver.visibility = View.INVISIBLE
-        binding.upButton.isEnabled = true
-        binding.rightButton.isEnabled = true
-        binding.downButton.isEnabled = true
-        binding.leftButton.isEnabled = true
+        binding.gameOver.layout.visibility = View.INVISIBLE
+        binding.gamepad.upButton.isEnabled = true
+        binding.gamepad.rightButton.isEnabled = true
+        binding.gamepad.downButton.isEnabled = true
+        binding.gamepad.leftButton.isEnabled = true
       }
     }
     viewModel.isWinningModalShowing.observe(viewLifecycleOwner) {
       if (it) {
-        binding.upButton.isEnabled = false
-        binding.rightButton.isEnabled = false
-        binding.downButton.isEnabled = false
-        binding.leftButton.isEnabled = false
+        binding.gamepad.upButton.isEnabled = false
+        binding.gamepad.rightButton.isEnabled = false
+        binding.gamepad.downButton.isEnabled = false
+        binding.gamepad.leftButton.isEnabled = false
         viewModel.beginFade(container!!)
         binding.sceneCover.visibility = View.VISIBLE
-        binding.youWin.visibility = View.VISIBLE
+        binding.youWin.layout.visibility = View.VISIBLE
       } else {
         binding.sceneCover.visibility = View.INVISIBLE
-        binding.youWin.visibility = View.INVISIBLE
-        binding.upButton.isEnabled = true
-        binding.rightButton.isEnabled = true
-        binding.downButton.isEnabled = true
-        binding.leftButton.isEnabled = true
+        binding.youWin.layout.visibility = View.INVISIBLE
+        binding.gamepad.upButton.isEnabled = true
+        binding.gamepad.rightButton.isEnabled = true
+        binding.gamepad.downButton.isEnabled = true
+        binding.gamepad.leftButton.isEnabled = true
       }
     }
-    binding.gameOverBackButton.setOnClickListener {
+    binding.gameOver.backButton.setOnClickListener {
       viewModel.backFromGameOver(requireActivity())
     }
-    binding.gameOverPlayAgainButton.setOnClickListener {
+    binding.gameOver.playAgainButton.setOnClickListener {
       viewModel.playAgainWhenGameOver()
     }
-    binding.youWinBackButton.setOnClickListener {
+    binding.youWin.backButton.setOnClickListener {
       viewModel.backFromYouWin(requireActivity())
     }
-    binding.youWinPlayAgainButton.setOnClickListener {
+    binding.youWin.playAgainButton.setOnClickListener {
       viewModel.playAgainWhenYouWin()
     }
-    binding.upButton.setOnTouchListener { _, _ ->
+    binding.gamepad.upButton.setOnTouchListener { _, _ ->
       binding.world.reactInput(Input.UP)
       false
     }
-    binding.rightButton.setOnTouchListener { _, _ ->
+    binding.gamepad.rightButton.setOnTouchListener { _, _ ->
       binding.world.reactInput(Input.RIGHT)
       false
     }
-    binding.downButton.setOnTouchListener { _, _ ->
+    binding.gamepad.downButton.setOnTouchListener { _, _ ->
       binding.world.reactInput(Input.DOWN)
       false
     }
-    binding.leftButton.setOnTouchListener { _, _ ->
+    binding.gamepad.leftButton.setOnTouchListener { _, _ ->
       binding.world.reactInput(Input.LEFT)
       false
     }

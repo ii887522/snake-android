@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:showIn="@layout/fragment_game">
+
+  <merge>
+    <ImageButton
+      android:id="@+id/up_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="@string/move_up"
+      app:layout_constraintBottom_toTopOf="@+id/down_button"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/world"
+      app:srcCompat="@drawable/up_arrow" />
+
+    <ImageButton
+      android:id="@+id/right_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="@string/move_right"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/left_button"
+      app:layout_constraintTop_toBottomOf="@+id/world"
+      app:srcCompat="@drawable/right_arrow" />
+
+    <ImageButton
+      android:id="@+id/down_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="@string/move_down"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/up_button"
+      app:srcCompat="@drawable/down_arrow" />
+
+    <ImageButton
+      android:id="@+id/left_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="@string/move_left"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/right_button"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/world"
+      app:srcCompat="@drawable/left_arrow" />
+  </merge>
+</layout>
