@@ -65,10 +65,10 @@ class World(context: Context, attrs: AttributeSet) : View(context, attrs) {
     val map = Map<CellType>(IntSize(w / CELL_SIZE, h / CELL_SIZE))
     scene = ControlGroup(lifecycleOwner, IntPoint(), arrayOf(
       BorderView(Border(IntRect(IntPoint(0, 0), IntSize(w, h)), CELL_SIZE), Color.RED, map, CellType.WALL),
-      Snake(lifecycleOwner, IntRect(IntPoint(0, 0), IntSize(w, h)), CELL_SIZE, random, map, {
+      Snake(lifecycleOwner, IntRect(IntPoint(0, 0), IntSize(w, h)), CELL_SIZE, random, map, isDead = isModalShowing, hasEatFood = isSnakeEatFood) {
         isLosingModalShowing.value = true
-      }, isDead = isModalShowing, hasEatFood = isSnakeEatFood),
-      Food(lifecycleOwner, IntRect(IntPoint(0, 0), IntSize(w, h)), CELL_SIZE, random, map, isSnakeEatFood)
+      },
+      Food(lifecycleOwner, wallRect = IntRect(IntPoint(0, 0), IntSize(w, h)), cellSize = CELL_SIZE, random = random, map = map, isEaten = isSnakeEatFood)
     ))
     ScoreModel(lifecycleOwner, (((w / CELL_SIZE - WALL_CELL_COUNT) * (h / CELL_SIZE - WALL_CELL_COUNT)) * .75f).toInt(), {
       isWinningModalShowing.value = true

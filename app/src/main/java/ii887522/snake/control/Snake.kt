@@ -18,10 +18,10 @@ import kotlin.random.Random
  * **Not Thread Safe**: it must only be used in main thread
  * @see Control
  */
-class Snake(lifecycleOwner: LifecycleOwner, wallRect: IntRect, cellSize: Int, random: Random, map: Map<CellType>, onHit: () -> Unit, isDead: LiveData<Boolean>,
-            hasEatFood: MutableLiveData<Boolean>) : Control() {
+class Snake(lifecycleOwner: LifecycleOwner, wallRect: IntRect, cellSize: Int, random: Random, map: Map<CellType>, isDead: LiveData<Boolean>,
+            hasEatFood: MutableLiveData<Boolean>, onHit: () -> Unit) : Control() {
 
-  private val model = SnakeModel(wallRect.size, cellSize, random, map, hasEatFood, onHit)
+  private val model = SnakeModel(wallSize = wallRect.size, cellSize = cellSize, random = random, map = map, hasEatFood = hasEatFood, onHit)
   private val wallPosition = wallRect.position
 
   private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
